@@ -1,22 +1,18 @@
-import React from 'react';
-
 function App() {
-
-
   const sortArray = (arr: number[]) => {
     return arr.sort((a, b) => a - b)
   }
 
-  const getFilterQuery = (arr: number[], index: number = 0) => {
-
+  const getFilterQuery = (arr: number[], index = 0) => {
     return new RegExp(`${arr[index].toString().split('').join('|')}`, 'g')
   }
 
   const filterArrayByQuery = (arr: number[], query: RegExp) => {
-
-    return arr.filter(item => {
-
-      if (query.test(item.toString()) && arr.join(' ').match(query)?.join('').toString() === item.toString()) {
+    return arr.filter((item) => {
+      if (
+        query.test(item.toString()) &&
+        arr.join(' ').match(query)?.join('').toString() === item.toString()
+      ) {
         return item
       } else if (query.test(item.toString())) {
         return ''
@@ -26,104 +22,89 @@ function App() {
     })
   }
 
+  const filterArray = (arr: number[], i = 0) => {
+    const filterQuery: RegExp = getFilterQuery(arr, i)
 
-  const filterArray = (arr: number[], i: number = 0) => {
-
-    let filterQuery: RegExp = getFilterQuery(arr, i)
-
-    let filteredByQueryArr = filterArrayByQuery(arr, filterQuery)
+    const filteredByQueryArr = filterArrayByQuery(arr, filterQuery)
 
     return filteredByQueryArr
   }
 
   const reverseDigitsInArray = (arr: number[]) => {
-    const reversedArr = arr.map(item => {
+    const reversedArr = arr.map((item) => {
       return parseInt(item.toString().split('').reverse().join(''))
     })
     return reversedArr
   }
 
   const squareNumbersInArray = (arr: number[]) => {
-    const squaredArr = arr.map(item => {
+    const squaredArr = arr.map((item) => {
       return item * item
     })
     return squaredArr
   }
 
   const checkStopCondition = (originArr: number[], resultArr: number[]) => {
-    if (resultArr.length === 0 || resultArr.length === 1 || resultArr.every((value, index) => value === originArr[index])) {
-      return true;
+    if (
+      resultArr.length === 0 ||
+      resultArr.length === 1 ||
+      resultArr.every((value, index) => value === originArr[index])
+    ) {
+      return true
     } else {
-      return false;
+      return false
     }
   }
 
-  /* [1, 8, 27, 37, 39, 41, 55, 61] */
-  /* [8, 27, 37, 39, 55] */
-  /* [8, 39, 55] */
-  /* [8, 93, 55] */
-  /* [64, 8649, 3025] */
-  /* [64, 3025, 8649] */
-  /* [3025] */
-  const doArray = (arr: number[], currArr: number[]) => {
-    let doneArr = [...arr]
+  const iterateArrayThroughFilter = (arr: number[], currArr: number[]) => {
+    let iteratedArr = [...arr]
 
-    for (let i = 0; i < doneArr.length; i++) {
-      if (checkStopCondition(currArr, doneArr)) {
-        return doneArr;
+    for (let i = 0; i < iteratedArr.length; i++) {
+      if (checkStopCondition(currArr, iteratedArr)) {
+        return iteratedArr
       } else {
-        doneArr = filterArray(doneArr, i)
-        if (doneArr.length !== filterArray(doneArr, i).length) {
+        iteratedArr = filterArray(iteratedArr, i)
+        if (iteratedArr.length !== filterArray(iteratedArr, i).length) {
           i = 0
         }
       }
-
-
     }
-    return doneArr
+    return iteratedArr
   }
 
-  const playArray = (arr: number[]) => {
-    let currentArray = [...arr];
+  const manipulateArray = (arr: number[]) => {
+    const currentArray = [...arr]
 
-    let sortedArray = sortArray(currentArray)
+    const sortedArray = sortArray(currentArray)
 
-    let filteredArr = filterArray(sortedArray)
+    const filteredArr = filterArray(sortedArray)
 
     let resultArr = [...filteredArr]
 
-    const doneArr = doArray(resultArr, currentArray)
+    const iteratedArr = iterateArrayThroughFilter(resultArr, currentArray)
 
-    console.log(doneArr);
-    if (checkStopCondition(currentArray, doneArr)) {
-      return doneArr;
+    console.log(iteratedArr)
+
+    if (checkStopCondition(currentArray, iteratedArr)) {
+      return iteratedArr
     }
-    resultArr = squareNumbersInArray(reverseDigitsInArray(doneArr));
+    resultArr = squareNumbersInArray(reverseDigitsInArray(iteratedArr))
 
-
-
-    resultArr = playArray(resultArr);  
+    resultArr = manipulateArray(resultArr)
 
     return resultArr
-
-
-
-
-
-
   }
 
-  const arrExample = [41, 55, 61, 1, 8, 27, 37, 39]
-  const arrExample2 = [41, 55, 61, 1, 8, 27, 82, 37, 22, 39]
-  const arrExample1 = [64, 8649, 3025]
+  const arrExample = [41, 55, 61, 1, 8, 27, 37, 39] // expected: [3025]
+  // some examples :
+  // const arrExample1 = [64, 8649, 3025]; //expected: [3025]
+  // const arrExample2 = [41, 55, 61, 1, 8, 27, 82, 37, 22, 39]; // expected: [3025, 8649]
+  // const arrExample3 = [11, 2, 4, 65, 89]; // expected: [2, 4, 11, 65, 89]
+  // const arrExample4 = [11, 2, 4, 625, 89]; // expected: []
 
+  manipulateArray(arrExample)
 
-  playArray(arrExample2)
-
-  return (
-    <div className="App">
-    </div>
-  );
+  return <div className='App'></div>
 }
 
-export default App;
+export default App
