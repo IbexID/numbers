@@ -1,46 +1,43 @@
-# Getting Started with Create React App
+# Задача по программированию.
+### Написать следующий метод. На вход приходит массив чисел.
+> [41, 55, 61, 1, 8, 27, 37 , 39]
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Необходимо осортировать его по возрастанию. Например так:
+>[1, 8, 27, 37 , 39, 41, 55, 61]
 
-## Available Scripts
+Далее берется первое число, ищутся все числа, в которых есть хоть одна цифра из этого числа. Такие числа удаляются. И исходное число тоже есть совпадения.
+>[8, 27, 37 , 39, 55]
 
-In the project directory, you can run:
+Далее снова. 8 ни  с чем не совпадает - берется слеующее число.
+>[8, 27, 37 , 39, 55]
 
-### `npm start`
+После проверки числа 27 уберутся 27 и 37.
+>[8, 39, 55]
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Дальнейшие проверки уже не изменят массив.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+ВЫВОД В КОНСОЛЬ текущего массива [8, 39, 55].
+Проверка, имеет ли смысл продолжать. Остановка происходит в одно их 3 случаев:
+- если в массиве всего одно число осталось
+- если в массиве ни одного чилса не осталось
+- если размер массива в этом этапе не изменился.
+Если условие останова выполнено, то возвращаем массив. Если нет, то далее следующее:
 
-### `npm test`
+Затем необходимо отобразить все числа в обратном порядке цифр.
+>[8, 93, 55]
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Затем возвести все числа в квадрат.
+>[64, 8649, 3025].
 
-### `npm run build`
+Далее с этим массивом происходит то же самое.
+Сортировка: 
+>[64, 3025, 8649]
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Поиск совпадений: 
+>[3025]
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Вывод в консоль: 
+>[3025]
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Проверка на остановку: останавливаемся и возвращаем.
+>[3025]
